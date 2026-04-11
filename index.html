@@ -1,9 +1,275 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Codex Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Urban Jackets</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #0ea5e9;
+      --accent-dark: #0284c7;
+      --wa: #25d366;
+      --wa-dark: #16a34a;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card);
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.72rem 1.1rem;
+      transition: transform 0.15s ease, background-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-instagram {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-instagram:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-whatsapp {
+      background: var(--wa);
+      color: #fff;
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--wa-dark);
+    }
+
+    .hero {
+      padding: 4rem 0 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .products {
+      padding: 1.5rem 0 3rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .price {
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .sizes {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 0.4rem;
+    }
+
+    footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 1.25rem 0;
+      text-align: center;
+      color: var(--muted);
+      background: #fff;
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 960px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav {
+        min-height: 64px;
+      }
+
+      .brand {
+        font-size: 1.12rem;
+      }
+
+      .btn {
+        padding: 0.62rem 0.92rem;
+        font-size: 0.92rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello Codex</h1>
+  <header>
+    <div class="container nav">
+      <div class="brand">Urban Jackets</div>
+      <a class="btn btn-instagram" href="https://instagram.com/_dinesh_811" target="_blank" rel="noopener noreferrer">
+        Instagram
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <h1>Streetwear Jackets for Everyday Style</h1>
+      <p>Premium looks, comfortable fit, and easy ordering on WhatsApp.</p>
+      <a class="btn btn-whatsapp" href="https://wa.me/919999999999?text=Hi%20I%20am%20interested%20in%20this%20jacket" target="_blank" rel="noopener noreferrer">
+        Chat on WhatsApp
+      </a>
+    </section>
+
+    <section class="products container" id="products">
+      <div class="grid" id="productGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Urban Jackets. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const waLink = "https://wa.me/919999999999?text=Hi%20I%20am%20interested%20in%20this%20jacket";
+
+    const products = [
+      {
+        name: "Classic Denim Jacket",
+        price: "₹1,999",
+        sizes: "S, M, L, XL",
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Olive Bomber Jacket",
+        price: "₹2,399",
+        sizes: "M, L, XL",
+        image: "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Black Puffer Jacket",
+        price: "₹2,899",
+        sizes: "S, M, L",
+        image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Brown Suede Jacket",
+        price: "₹3,199",
+        sizes: "M, L, XL",
+        image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+      }
+    ];
+
+    const grid = document.getElementById("productGrid");
+
+    products.forEach((item) => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" loading="lazy" />
+        <div class="card-content">
+          <h3 class="name">${item.name}</h3>
+          <p class="price">${item.price}</p>
+          <p class="sizes">Sizes: ${item.sizes}</p>
+          <a class="btn btn-whatsapp" href="${waLink}" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
